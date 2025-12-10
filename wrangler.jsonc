@@ -11,6 +11,13 @@
 		"nodejs_compat",
 		"global_fetch_strictly_public"
 	],
+  "kv_namespaces": [
+    {
+      "binding": "MY_NEXT_KV",
+      "id": "07e28c2710504a94a0e30fd34abb5082",
+      "preview_id": "07e28c2710504a94a0e30fd34abb5082"
+    }
+  ],
 	"assets": {
 		"binding": "ASSETS",
 		"directory": ".open-next/assets"

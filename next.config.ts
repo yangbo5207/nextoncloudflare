@@ -2,6 +2,10 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
 	/* config options here */
+  // 必须：关闭 Next.js 自带的图片优化（除非你配置了 Cloudflare Images）
+  images: {
+    unoptimized: true,
+  },
 };
 
 export default nextConfig;
