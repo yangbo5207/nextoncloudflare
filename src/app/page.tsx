@@ -1,12 +1,10 @@
-import React from "react";
+import React, {Suspense} from "react";
 import { ThemeToggle } from "@/app/_components/theme-toggle";
-import ColumnCard from "@/app/_components/column-card";
+import ColumnList from "@/app/_components/column-list";
 import Link from "next/link";
-import { getColumnsWithStats } from './_service/kv';
 
 // 4. 页面主体
 export default async function Home() {
-  const columns = await getColumnsWithStats();
   return (
     <main className="min-h-screen flex flex-col items-center py-12 px-4 sm:px-6 lg:px-8">
       {/* 浮动切换按钮 */}
@@ -23,12 +21,9 @@ export default async function Home() {
         </button>
       </div>
 
-      {/* Grid */}
-      <div className="max-w-7xl w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-        {columns.map((item) => (
-          <ColumnCard key={item.id} item={item} />
-        ))}
-      </div>
+      <Suspense fallback={<div>Loading...</div>}>
+        <ColumnList />
+      </Suspense>
     </main>
   );
 }

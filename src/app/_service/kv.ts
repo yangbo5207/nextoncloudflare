@@ -15,7 +15,7 @@ interface ColumnFull extends ColumnMeta, ColumnStats {}
 
 // 1. 获取所有专栏（聚合了阅读量和点赞量）
 export async function getColumnsWithStats(): Promise<ColumnFull[]> {
-  const { env } = getCloudflareContext();
+  const { env } = await getCloudflareContext({async: true});
   
   // A. 获取元数据列表
   const indexJson = await env.MY_NEXT_KV.get("columns:index");
@@ -40,14 +40,14 @@ export async function getColumnsWithStats(): Promise<ColumnFull[]> {
 
 // 2. 获取单个专栏数据
 export async function getColumnDetail(id: string): Promise<ColumnStats> {
-  const { env } = getCloudflareContext();
+  const { env } = await getCloudflareContext({async: true});
   const val = await env.MY_NEXT_KV.get(`col:${id}:stats`);
   return val ? JSON.parse(val) : { views: 0, likes: 0 };
 }
 
 // 3. 写入/增加数据 (Server Action 用)
 export async function incrementStat(id: string, type: 'views' | 'likes') {
-  const { env } = getCloudflareContext();
+  const { env } = await getCloudflareContext({async: true});
   const key = `col:${id}:stats`;
 
   // A. 读取当前值
@@ -70,7 +70,7 @@ export async function incrementStat(id: string, type: 'views' | 'likes') {
 
 // 4. 初始化/添加一个新专栏 (仅供后台管理使用)
 export async function addColumn(newCol: ColumnMeta) {
-  const { env } = getCloudflareContext();
+  const { env } = await getCloudflareContext({async: true});
   
   // 读取列表 -> 追加 -> 写回
   const indexJson = await env.MY_NEXT_KV.get("columns:index");
