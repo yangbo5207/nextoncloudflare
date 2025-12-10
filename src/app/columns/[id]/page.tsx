@@ -2,8 +2,8 @@ import { getColumnDetail, incrementStat } from "@/app/_service/kv";
 import { likeColumn } from "./_action";
 
 // 这是一个简单的 Server Component
-export default async function ColumnDetail({ params }: { params: { id: string } }) {
-  const id = params.id;
+export default async function ColumnDetail({ params }: { params: Promise<{ id: string }> }) {
+  const id = (await params).id;
   
   // 1. 每次进入详情页，自动增加阅读量
   // 注意：为了不阻塞页面渲染，可以不 await 这个操作，或者把它放在 useEffect (客户端) 触发的 API 中
