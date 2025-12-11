@@ -1,38 +1,30 @@
-import { Inter } from "next/font/google";
-import { addColumn } from "@/app/_service/kv";
+import { addArticle } from "@/app/_service/kv";
 import SubmitButton from "./_components/submit-button";
 import { nanoid } from "nanoid";
 import { redirect } from "next/navigation";
 
-// 加载字体
-const inter = Inter({ subsets: ["latin"] });
-
-export default function CreateColumnForm() {
+export default async function CreateColumnForm({ searchParams }: { searchParams: Promise<{ columnId: string }> }) {
+  const params = await searchParams;
+  const columnId = params.columnId;
 
   async function __formAction(formData: FormData) {
     'use server';
     const title = formData.get("title") as string;
-    const desc = formData.get("desc") as string;
-    await addColumn({ id: nanoid(), title, desc });
-    redirect("/");
+    const content = formData.get("content") as string;
+    await addArticle(columnId, { title, content });
+    redirect(`/columns/${columnId}`);
   }
 
   return (
     // 外层容器：负责背景和居中
-    <div className={`relative min-h-screen w-full flex items-center justify-center overflow-hidden bg-gray-100 ${inter.className}`}>
-      
-      {/* 背景装饰 Blob 动画 */}
-      <div className="absolute top-0 -left-4 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
-      <div className="absolute top-0 -right-4 w-72 h-72 bg-yellow-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
-      <div className="absolute -bottom-8 left-20 w-72 h-72 bg-pink-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
-
+    <div className="relative min-h-screen w-full flex items-center justify-center overflow-hidden bg-gray-100">
       {/* 卡片容器 */}
       <div className="relative w-full max-w-lg p-4">
         <div className="relative bg-white/70 backdrop-blur-lg border border-white/50 p-8 md:p-10">
           
           {/* Header */}
           <div className="mb-10 text-center">
-            <h1 className="text-3xl font-bold text-slate-900 tracking-tight">新建专栏</h1>
+            <h1 className="text-3xl font-bold text-slate-900 tracking-tight">新增文章</h1>
           </div>
 
           {/* Form */}
@@ -41,7 +33,7 @@ export default function CreateColumnForm() {
             {/* 专栏名称 */}
             <div className="space-y-2 group">
               <label htmlFor="name" className="block text-sm font-semibold text-gray-700 ml-1 transition-colors group-focus-within:text-gray-600">
-                专栏名称
+                文章标题
               </label>
               <div className="relative">
                 <input
@@ -50,7 +42,7 @@ export default function CreateColumnForm() {
                   name="title"
                   required
                   className="block w-full px-4 py-3.5 text-slate-700 bg-white/50 border border-slate-200 focus:ring-4 focus:ring-indigo-500/10 focus:border-gray-500 outline-none transition-all duration-300 placeholder-slate-400 disabled:opacity-50"
-                  placeholder="例如：产品设计思维"
+                  placeholder="例如：如何提高工作效率"
                 />
                 <div className="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none text-slate-400">
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
@@ -58,18 +50,18 @@ export default function CreateColumnForm() {
               </div>
             </div>
 
-            {/* 专栏描述 */}
+            {/* 文章内容 */}
             <div className="space-y-2 group">
               <label htmlFor="description" className="block text-sm font-semibold text-slate-700 ml-1 transition-colors group-focus-within:text-gray-600">
-                专栏描述
+                文章内容
               </label>
               <textarea
-                id="desc"
-                name="desc"
+                id="content"
+                name="content"
                 rows={4}
                 required
                 className="block w-full px-4 py-3.5 text-slate-700 bg-white/50 border border-slate-200 focus:ring-4 focus:ring-indigo-500/10 focus:border-gray-500 outline-none transition-all duration-300 resize-none placeholder-slate-400 disabled:opacity-50"
-                placeholder="请简要介绍该专栏的主题内容..."
+                placeholder="请输入文章内容..."
               ></textarea>
             </div>
 
