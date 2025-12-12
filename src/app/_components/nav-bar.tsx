@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { ThemeToggle } from '@/app/_components/theme-toggle';
+import Profile from '@/app/_components/profile';
 
 export default function Navbar() {
   return (
@@ -10,8 +11,8 @@ export default function Navbar() {
         </Link>
         <nav className="flex gap-4 items-center text-sm font-medium text-gray-500">
           <ThemeToggle />
-          <Link href="/" className="hover:text-black transition">首页</Link>
           <Link href="/columns" className="hover:text-black transition">所有专栏</Link>
+          <Profile />
         </nav>
       </div>
     </header>

@@ -7,7 +7,10 @@ declare namespace Cloudflare {
 	}
 	interface Env {
 		MY_NEXT_KV: KVNamespace;
+		GITHUB_CLIENT_ID: string;
+		GITHUB_CLIENT_SECRET: string;
 		NEXTJS_ENV: string;
+		NEXT_PUBLIC_BASE_URL: string;
 		ASSETS: Fetcher;
 	}
 }
