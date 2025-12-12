@@ -26,12 +26,12 @@ export default async function ColumnDetail({ params }: { params: Promise<{ id: s
         <span className="text-blue-600 font-bold tracking-wide uppercase text-sm mb-4 block">
           技术趋势
         </span>
-        <h1 className="text-4xl font-extrabold mb-6 text-gray-900">{stats.title}</h1>
-        <p className="text-gray-500 text-lg max-w-2xl mx-auto leading-relaxed">
+        <h1 className="text-2xl sm:text-4xl font-extrabold mb-6 text-gray-900">{stats.title}</h1>
+        <p className="text-gray-500 text-sm sm:text-lg max-w-2xl mx-auto leading-relaxed">
           {stats.desc}
         </p>
         <div className='flex gap-5 mt-4 justify-center'>
-          <span className="text-xs text-gray-500">专栏 ID: {id}</span>
+          <span className="text-xs hidden sm:block text-gray-500">专栏 ID: {id}</span>
           <span className='text-xs text-gray-500'>阅读量: {stats.views}</span>
           <span className='text-xs text-gray-500'>点赞量: {stats.likes}</span>
         </div>
@@ -47,11 +47,11 @@ export default async function ColumnDetail({ params }: { params: Promise<{ id: s
         </button>
       </form>
 
-      <div className='my-6 flex items-center justify-between'>
-        <h3 className="text-lg font-bold text-gray-900">文章列表</h3>
+      <div className='my-6 flex items-center justify-between px-2'>
+        <h3 className="text-base sm:text-lg font-bold text-gray-900">文章列表</h3>
         <Link 
           href={`/articles/create?columnId=${id}`} 
-          className='inline-flex transition cursor-pointer items-center gap-2'
+          className='inline-flex transition cursor-pointer items-center gap-2 text-ms sm:text-base'
         >
           <PlusIcon className="w-4 h-4" /> 新增文章
         </Link>

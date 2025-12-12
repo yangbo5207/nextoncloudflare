@@ -20,7 +20,7 @@ export default async function Profile() {
         className="size-6 rounded-full border border-gray-200"
       />
       
-      <span className="text-sm">{user.name}</span>
+      <span className="text-sm hidden sm:block">{user.login}</span>
     </Link>
   );
 }
