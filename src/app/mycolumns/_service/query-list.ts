@@ -1,5 +1,5 @@
 import { getCloudflareContext } from '@opennextjs/cloudflare'
-import { columnStatsKey, columnByUserKey } from '@/app/columns/_service/keys';
+import { columnStatsKey, columnByUserKey } from '@/lib/keys';
 import { cookies } from 'next/headers';
 
 const getKV = () => getCloudflareContext().env.MY_NEXT_KV;

@@ -1,7 +1,6 @@
 import { Inter } from "next/font/google";
 import { addColumn } from "../_service/create";
 import SubmitButton from "./_components/submit-button";
-import { nanoid } from "nanoid";
 import { redirect } from "next/navigation";
 
 // 加载字体

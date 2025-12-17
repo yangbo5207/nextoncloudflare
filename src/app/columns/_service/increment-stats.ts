@@ -1,5 +1,5 @@
 import { getCloudflareContext } from '@opennextjs/cloudflare'
-import { columnStatsKey } from './keys';
+import { columnStatsKey } from '@/lib/keys';
 
 const getKV = () => getCloudflareContext().env.MY_NEXT_KV;
 

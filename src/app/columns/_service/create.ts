@@ -1,20 +1,14 @@
 import { getCloudflareContext } from '@opennextjs/cloudflare'
-import { cookies } from 'next/headers';
 import { ulid } from 'ulid';
-import { NextResponse } from 'next/server';
-import { columnKey, columnByUserKey, columnStatsKey } from './keys';
+import { columnKey, columnByUserKey, columnStatsKey } from '@/lib/keys';
+import { authenticateAction } from '@/lib/authenticate-action';
 
 const getKV = () => getCloudflareContext().env.MY_NEXT_KV;
 
 // 添加一个新专栏
-export async function addColumn(newCol: ColumnMeta) {
-  const cookieStore = await cookies();
-  const sessionId = cookieStore.get('session_id')?.value;
+async function fn(user_id: string, newCol: ColumnMeta) {
+  
   const kv = getKV();
-
-  if (!sessionId) {
-    throw new Error('Unauthorized');
-  }
 
   if (!newCol.title) {
     throw new Error('Title is required');
@@ -25,14 +19,6 @@ export async function addColumn(newCol: ColumnMeta) {
   if (!newCol.desc) {
     throw new Error('Description is required');
   }
-
-  const sessionData = await kv.get<{userId: string}>(`session:${sessionId}`, 'json');
-
-  if (!sessionData || !sessionData.userId) {
-    throw new Error('Unauthorized');
-  }
-
-  let user_id = sessionData.userId;
 
   const userinfo: any = await kv.get(`user:${user_id}`, 'json');
 
@@ -57,23 +43,15 @@ export async function addColumn(newCol: ColumnMeta) {
     ...usermeta
   }
 
-  try {
-    await kv.put(key, JSON.stringify(column), {
+  return Promise.all([
+    kv.put(key, JSON.stringify(column), {
       metadata: column
-    });
-    await kv.put(key_user, JSON.stringify(column), {
+    }),
+    kv.put(key_user, JSON.stringify(column), {
       metadata: column
-    });
-    // 初始化该专栏的统计数据
-    await kv.put(key_stats, JSON.stringify({ views: 0, likes: 0 }));
-    return NextResponse.json({
-      success: true,
-      message: '专栏创建成功'
-    }, { status: 201 });
-  } catch (error) {
-    return NextResponse.json({
-      success: false,
-      error: error instanceof Error ? error.message : 'Unknown error',
-    }, { status: 500 });
-  }
+    }),
+    kv.put(key_stats, JSON.stringify({ views: 0, likes: 0 }))
+  ])
 }
+
+export const addColumn = await authenticateAction(fn);

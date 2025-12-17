@@ -26,7 +26,7 @@ export default async function Home() {
       {/* Header */}
       <div className="max-w-6xl w-full mb-10 flex items-center justify-between border-b border-gray-200 pb-6 transition-colors duration-300">
         <div>
-          <h1 className="text-xl md:text-3xl font-bold tracking-tight text-slate-900">最近专栏</h1>
+          <h1 className="text-xl md:text-3xl font-bold tracking-tight text-slate-900">热门专栏</h1>
           <p className="mt-2 text-xs md:text-sm text-slate-500">深入浅出，探索技术的无限可能</p>
         </div>
         <Link href="/columns" className='inline-flex items-center gap-2 text-gray-500 hover:text-gray-900 transition text-xs md:text-sm'>
