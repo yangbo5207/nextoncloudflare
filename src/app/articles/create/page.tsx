@@ -12,7 +12,6 @@ export default function CreateColumnForm() {
   const editor = useRef<any>(null);
 
   function formAction(formData: FormData) {
-    console.log('formAction', formData)
     return onSubmit(columnId, formData, editor.current.getEditorHTML());
   }
 

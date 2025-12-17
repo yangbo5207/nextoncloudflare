@@ -1,18 +1,22 @@
 import { notFound } from 'next/navigation';
 import LikeButton from './_components/like-button';
 import CommentSection from './_components/comment-section';
-import { getArticleById } from '@/app/_service/kv';
+import { getArticleDetail } from '@/app/articles/_service/query';
+import { incrementStat } from '../_service/increment-stats';
 import { Suspense } from 'react';
+
+import './_article.css';
 
 export default async function ArticlePage({ params }: { params: Promise<{ id: string }> }) {
   const id = (await params).id;
-  const article = await getArticleById(id);
+  const article = await getArticleDetail(id);
+  await incrementStat(id, 'views');
   if (!article) {
     return notFound();
   }
 
   return (
-    <div className="max-w-[720px] mx-auto px-6 py-16">
+    <div className="max-w-6xl mx-auto px-6 py-16">
       {/* 文章头部 */}
       <div className="text-center mb-12">
         <div className="text-sm text-gray-500 mb-6 font-medium">

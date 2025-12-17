@@ -44,6 +44,7 @@ export async function authenticateAction<T, R>(
         data: result,
       }
     } catch (error) {
+      console.error('err', error);
       return {
         success: false,
         message: error instanceof Error ? error.message : 'Unknown error',

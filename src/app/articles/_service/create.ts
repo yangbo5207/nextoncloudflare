@@ -1,23 +1,25 @@
 import { getCloudflareContext } from '@opennextjs/cloudflare'
 import { ulid } from 'ulid';
-import { columnKey, columnByUserKey, columnStatsKey } from '@/lib/keys';
+import { articleKey, articleByColumnKey, articleStatsKey, articleByUserKey } from '@/lib/keys';
 import { authenticateAction } from '@/lib/authenticate-action';
 
 const getKV = () => getCloudflareContext().env.MY_NEXT_KV;
 
 // 添加一个新专栏
-async function fn(user_id: string, newCol: ColumnMeta) {
+async function fn(user_id: string, meta: ArticleMeta) {
   
   const kv = getKV();
+  const { column_id, title, content } = meta;
 
-  if (!newCol.title) {
+  if (!title) {
     throw new Error('Title is required');
   }
-  if (!newCol.tag) {
-    throw new Error('Tag is required');
+  if (!content) {
+    throw new Error('Content is required');
   }
-  if (!newCol.desc) {
-    throw new Error('Description is required');
+
+  if (!column_id) {
+    throw new Error('Column ID is required');
   }
 
   const userinfo: any = await kv.get(`user:${user_id}`, 'json');
@@ -28,30 +30,37 @@ async function fn(user_id: string, newCol: ColumnMeta) {
     user_avatar: userinfo?.avatar,
   }
 
-  const col_id = ulid();
+  const article_id = ulid();
   // 支持查询所有的专栏
-  const key = columnKey.getKey(col_id);
+  const key = articleKey.getKey(article_id);
   // 支持查询用户自己的专栏
-  let key_user = columnByUserKey.getKey(user_id, col_id);
-  let key_stats = columnStatsKey.getKey(col_id);
+  let key_user = articleByUserKey.getKey(user_id, article_id);
+  // 支持查询文章所属专栏
+  let key_column = articleByColumnKey.getKey(column_id, article_id);
+  // 支持查询文章统计
+  let key_stats = articleStatsKey.getKey(article_id);
 
-  const column: Column = {
-    id: col_id,
+  const article: Article = {
+    id: article_id,
     createdAt: Date.now(),
     updatedAt: Date.now(),
-    ...newCol,
+    ...meta,
     ...usermeta
   }
+  const { content: _, ...article_meta} = article;
 
   return Promise.all([
-    kv.put(key, JSON.stringify(column), {
-      metadata: column
+    kv.put(key, JSON.stringify(article), {
+      metadata: article_meta
     }),
-    kv.put(key_user, JSON.stringify(column), {
-      metadata: column
+    kv.put(key_user, JSON.stringify(article), {
+      metadata: article_meta
+    }),
+    kv.put(key_column, JSON.stringify(article), {
+      metadata: article_meta
     }),
     kv.put(key_stats, JSON.stringify({ views: 0, likes: 0 }))
   ])
 }
 
-export const addColumn = await authenticateAction(fn);
+export const addArticle = await authenticateAction(fn);

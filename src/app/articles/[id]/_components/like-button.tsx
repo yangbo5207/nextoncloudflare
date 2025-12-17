@@ -1,5 +1,6 @@
 "use client";
 import { useState } from 'react';
+import { Heart } from 'lucide-react';
 
 export default function LikeButton() {
   const [liked, setLiked] = useState(false);
@@ -11,7 +12,7 @@ export default function LikeButton() {
         ${liked ? 'text-red-500 scale-110 shadow-red-100' : 'text-gray-300'}
       `}
     >
-      ♥
+      <Heart className={`${liked ? 'text-red-500' : 'text-gray-300'}`} />
     </button>
   );
 }

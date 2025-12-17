@@ -12,3 +12,23 @@ export const columnStatsKey = {
   getKey: (id: string) => `col_stats:${id}`,
   getPrefix: () => 'col_stats:',
 }
+
+export const articleKey = {
+  getKey: (id: string) => `article:${id}`,
+  getPrefix: 'article:'
+}
+
+export const articleByColumnKey = {
+  getKey: (column_id: string, id: string) => `article_by_column:${column_id}:${id}`,
+  getPrefix: (column_id: string) => `article_by_column:${column_id}:`,
+}
+
+export const articleByUserKey = {
+  getKey: (user_id: string, id: string) => `article_by_user:${user_id}:${id}`,
+  getPrefix: (user_id: string) => `article_by_user:${user_id}:`,
+}
+
+export const articleStatsKey = {
+  getKey: (id: string) => `article_stats:${id}`,
+  getPrefix: () => 'article_stats:',
+}
