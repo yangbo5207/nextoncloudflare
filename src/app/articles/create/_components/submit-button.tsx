@@ -9,7 +9,7 @@ export default function SubmitButton() {
     <button
       type="submit"
       disabled={pending}
-      className={`relative w-full py-4 px-6 font-semibold shadow-lg transition-all duration-300 transform focus:outline-none focus:ring-2 focus:ring-offset-2 overflow-hidden
+      className={`text-sm relative py-2 px-4 font-semibold transition-all duration-300 transform focus:outline-none focus:ring-2 focus:ring-offset-2 overflow-hidden
         ${pending ? 'cursor-not-allowed opacity-80' : 'bg-gray-900 text-white shadow-gray-500/30 hover:-translate-y-0.5 hover:shadow-gray-500/40 focus:ring-gray-500'}
       `}
     >
