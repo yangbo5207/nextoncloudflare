@@ -1,4 +1,6 @@
-import { getColumnDetail, incrementStat } from "@/app/_service/kv";
+// import { incrementStat } from "@/app/_service/kv";
+import { getColumnDetail } from "../_service/query";
+import { incrementStat } from "../_service/increment-stats";
 import { notFound } from 'next/navigation';
 import { likeColumn } from "./_action";
 import { ThumbsUp, PlusIcon } from 'lucide-react'

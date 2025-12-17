@@ -1,5 +1,5 @@
 import { Inter } from "next/font/google";
-import { addColumn } from "@/app/_service/kv";
+import { addColumn } from "../_service/create";
 import SubmitButton from "./_components/submit-button";
 import { nanoid } from "nanoid";
 import { redirect } from "next/navigation";
@@ -13,7 +13,8 @@ export default function CreateColumnForm() {
     'use server';
     const title = formData.get("title") as string;
     const desc = formData.get("desc") as string;
-    await addColumn({ id: nanoid(), title, desc });
+    const tag = formData.get("tag") as string;
+    await addColumn({ title, desc, tag });
     redirect("/");
   }
 
@@ -51,6 +52,26 @@ export default function CreateColumnForm() {
                   required
                   className="block w-full px-4 py-3.5 text-slate-700 bg-white/50 border border-slate-200 focus:ring-4 focus:ring-indigo-500/10 focus:border-gray-500 outline-none transition-all duration-300 placeholder-slate-400 disabled:opacity-50"
                   placeholder="例如：产品设计思维"
+                />
+                <div className="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none text-slate-400">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
+                </div>
+              </div>
+            </div>
+
+            {/* 专栏名称 */}
+            <div className="space-y-2 group">
+              <label htmlFor="name" className="block text-sm font-semibold text-gray-700 ml-1 transition-colors group-focus-within:text-gray-600">
+                标签
+              </label>
+              <div className="relative">
+                <input
+                  type="text"
+                  id="tag"
+                  name="tag"
+                  required
+                  className="block w-full px-4 py-3.5 text-slate-700 bg-white/50 border border-slate-200 focus:ring-4 focus:ring-indigo-500/10 focus:border-gray-500 outline-none transition-all duration-300 placeholder-slate-400 disabled:opacity-50"
+                  placeholder="例如：技术趋势"
                 />
                 <div className="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none text-slate-400">
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>

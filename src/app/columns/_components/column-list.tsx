@@ -2,7 +2,7 @@ import ColumnCard from "@/app/_components/column-card";
 import { getColumnsList } from "@/app/columns/_service/query-list";
 
 export default async function ColumnList() {
-  const columns = await getColumnsList(3);
+  const columns = await getColumnsList();
 
   if (columns.length === 0) {
     return <div className="text-gray-400 text-center py-10">暂无专栏</div>;

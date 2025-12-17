@@ -11,7 +11,7 @@ export default function Navbar() {
         </Link>
         <nav className="flex gap-4 items-center text-sm font-medium text-gray-500">
           <ThemeToggle />
-          <Link href="/columns" className="hover:text-black transition text-sm sm:text-base">所有专栏</Link>
+          <Link href="/mycolumns" className="hover:text-black transition text-sm sm:text-base">我的专栏</Link>
           <Profile />
         </nav>
       </div>

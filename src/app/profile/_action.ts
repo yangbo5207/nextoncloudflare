@@ -6,7 +6,7 @@ import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
 // 获取 KV 实例
-const getKV = () => getCloudflareContext().env.MY_NEXT_KV; // 确保 wrangler.toml 里绑定名为 MY_KV
+const getKV = () => getCloudflareContext().env.MY_NEXT_KV;
 
 export async function logout() {
   const cookieStore = await cookies();

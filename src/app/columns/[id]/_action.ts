@@ -1,6 +1,6 @@
 'use server'
 
-import { incrementStat } from "@/app/_service/kv";
+import { incrementStat } from "../_service/increment-stats";
 import { revalidatePath } from "next/cache";
 
 export async function likeColumn(id: string) {
