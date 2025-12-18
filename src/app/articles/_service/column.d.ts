@@ -16,6 +16,7 @@ interface Article extends ArticleMeta {
   user_id: string;
   user_name: string;
   user_avatar: string;
+  isLiked: boolean;
 }
 
 interface ArticleFull extends Article, ArticleStats {}

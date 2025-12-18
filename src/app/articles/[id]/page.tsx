@@ -16,7 +16,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ id: st
   }
 
   return (
-    <div className="max-w-6xl mx-auto px-6 py-16">
+    <div className="max-w-6xl mx-auto px-6 py-16 bg-white mt-8">
       {/* 文章头部 */}
       <div className="text-center mb-12">
         <div className="text-sm text-gray-500 mb-6 font-medium">
@@ -35,7 +35,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ id: st
 
       {/* 交互区域 */}
       <div className="">
-        <LikeButton />
+        <LikeButton isLiked={article.isLiked} articleId={id} />
       </div>
 
       <Suspense fallback={<div>Loading...</div>}>

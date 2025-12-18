@@ -32,3 +32,8 @@ export const articleStatsKey = {
   getKey: (id: string) => `article_stats:${id}`,
   getPrefix: () => 'article_stats:',
 }
+
+export const articleLikeKey = {
+  getKey: (user_id: string, article_id: string) => `article_like:${user_id}:${article_id}`,
+  getPrefix: (user_id: string) => `article_like:${user_id}:`,
+}
