@@ -1,4 +1,4 @@
-import React, {Suspense} from "react";
+import {Suspense} from "react";
 import ColumnList from "@/app/_components/column-list";
 import Link from "next/link";
 import { ArrowRightIcon } from "lucide-react";

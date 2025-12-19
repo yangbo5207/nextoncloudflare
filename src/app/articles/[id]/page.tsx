@@ -1,10 +1,8 @@
 import { notFound } from 'next/navigation';
 import LikeButton from './_components/like-button';
-import CommentSection from './_components/comment-section';
+import CommentServer from './_components/comment-server';
 import { getArticleDetail } from '@/app/articles/_service/query';
 import { incrementStat } from '../_service/increment-stats';
-import { Suspense } from 'react';
-
 import './_article.css';
 
 export default async function ArticlePage({ params }: { params: Promise<{ id: string }> }) {
@@ -38,9 +36,8 @@ export default async function ArticlePage({ params }: { params: Promise<{ id: st
         <LikeButton isLiked={article.isLiked} articleId={id} />
       </div>
 
-      <Suspense fallback={<div>Loading...</div>}>
-        <CommentSection />
-      </Suspense>
+      {/* 评论区 */}
+      <CommentServer pre_id={id} user={{user_id: article.user_id, user_name: article.user_name, user_avatar: article.user_avatar}} />
     </div>
   );
 }

@@ -1,9 +1,9 @@
 import { getCloudflareContext } from '@opennextjs/cloudflare'
-import { articleByColumnKey, articleStatsKey, articleByUserKey } from '@/lib/keys';
+import { articleByColumnKey, articleStatsKey } from '@/lib/keys';
 
 const getKV = () => getCloudflareContext().env.MY_NEXT_KV;
 
-// 获取专栏列表
+// 获取某个专栏下的文章列表
 export async function getArticlesListByColumn(column_id: string, limit?: number) {
   const kv = getKV();
   const prefix = articleByColumnKey.getPrefix(column_id);

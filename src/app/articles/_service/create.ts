@@ -42,6 +42,7 @@ async function fn(user_id: string, meta: ArticleMeta) {
 
   const article: Article = {
     id: article_id,
+    isLiked: false,
     createdAt: Date.now(),
     updatedAt: Date.now(),
     ...meta,
